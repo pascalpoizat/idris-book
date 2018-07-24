@@ -228,13 +228,13 @@ addToStore (MkData size store) newItem = MkData (S size) (addToData store)
     addToData (x :: xs) = x :: addToData xs
 
 ||| Supported commands
-data Command = ||| Add a todo
+data Command = ||| Add an item
                Add String
-             | ||| Get a todo by its id
+             | ||| Get an item by its id
                Get Integer
-             | ||| Search a todo by a subpart of its label
+             | ||| Search an item
                Search String
-             | ||| Get the number of todos
+             | ||| Get the number of items
                Size
              | |||| Quit
                Quit
