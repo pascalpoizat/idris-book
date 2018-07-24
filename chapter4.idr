@@ -134,3 +134,74 @@ testPic1 = Combine (Primitive (Triangle 2 3)) (Primitive (Triangle 2 4))
 
 testPic2 : Picture
 testPic2 = Combine (Primitive (Rectangle 1 3)) (Primitive (Circle 4))
+
+--
+-- section 4.2
+--
+
+||| Powersources for vehicles
+data PowerSource = Petrol | Pedal | Electric
+
+||| Vehicles
+data Vehicle : PowerSource -> Type where
+  Unicycle : Vehicle Pedal
+  Bicycle : Vehicle Pedal
+  Motorcycle : (fuel : Nat) -> Vehicle Petrol
+  Car : (fuel : Nat) -> Vehicle Petrol
+  Bus : (fuel : Nat) -> Vehicle Petrol
+  Tram : Vehicle Electric
+  ElectricCar : Vehicle Electric
+
+wheels : Vehicle power -> Nat
+wheels Unicycle = 1
+wheels Bicycle = 2
+wheels Motorcycle = 2
+wheels (Car fuel) = 4
+wheels (Bus fuel) = 4
+wheels Tram = 10
+wheels ElectricCar = 2
+
+refuel : Vehicle Petrol -> Vehicle Petrol
+refuel (Motorcycle fuel) = Motorcycle 50
+refuel (Car fuel) = Car 100
+refuel (Bus fuel) = Bus 200
+refuel Unicycle impossible
+refuel Bicycle impossible
+refuel Tram impossible
+refuel ElectricCar impossible
+
+-- first version, does not output the same error than in the book
+-- *chapter4> vectTake1 3 [1,2,3,4,5,6,7]
+-- [1, 2, 3] : Vect 3 Integer
+-- *chapter4> vectTake1 8 [1,2,3,4,5,6,7]
+-- (input):1:11:When checking argument prf to function Data.Fin.fromInteger:
+--         When using 8 as a literal for a Fin 8
+--                 8 is not strictly less than 8
+vectTake1 : (q : Fin (S n)) -> Vect n t -> Vect (finToNat q) t
+vectTake1 FZ _ = []
+vectTake1 (FS x) [] impossible
+vectTake1 (FS x) (y :: ys) = y :: vectTake1 x ys
+
+-- second version
+-- *chapter4> vectTake2 3 [1,2,3,4,5,6,7]
+-- [1, 2, 3] : Vect 3 Integer
+-- *chapter4> vectTake2 8 [1,2,3,4,5,6,7]
+-- (input):1:14:When checking argument xs to constructor Data.Vect.:::
+--         Type mismatch between
+--                 Vect 0 elem (Type of [])
+--         and
+--                 Vect (S k) t (Expected type)
+--
+--         Specifically:
+--                 Type mismatch between
+--                         0
+--                 and
+--                         S k
+vectTake2 : (q : Nat) -> Vect (q+k) t -> Vect q t
+vectTake2 Z _ = []
+vectTake2 (S k) (x :: xs) = x :: vectTake2 k xs
+
+sumEntries : Num a => (pos : Integer) -> Vect n a -> Vect n a -> Maybe a
+sumEntries {n} pos xs ys = case integerToFin pos n of
+                                Nothing => Nothing
+                                (Just x) => Just (index x xs + index x ys)
