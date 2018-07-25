@@ -32,7 +32,7 @@ my_vect_map f [] = []
 my_vect_map f (x :: xs) = f x :: my_vect_map f xs
 
 --
--- section 3.3
+-- section 3.3 (see also the update of the matrix examples in chapter 6)
 --
 
 createEmptyVector : Num t =>
