@@ -54,7 +54,7 @@ adder : Num t => (n : Nat) -> (acc : t) -> AdderType n t
 adder Z acc = acc
 adder (S k) acc = \next => adder k (next + acc)
 
-||| adder for 3 integers
+||| adder for 3 naturals
 add3Nat : AdderType 3 Nat
 add3Nat = adder 3 0
 
