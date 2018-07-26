@@ -91,6 +91,10 @@ over_length_2 k xs = length (filter lengthMoreThanK xs) -- using filtering
 over_length_3 : Nat -> List String -> Nat
 over_length_3 k xs = length (filter (\x => length x > k) xs) -- using lambda
 
+over_length_4 : Nat -> List String -> Nat
+over_length_4 k xs = let ls = map length xs in -- using map and filtering
+                      length $ filter (> k) ls
+
 -- exercise 9
 -- run with ":exec ex9_1" or ":exec ex9_2" (or use a function main in a module Main)
 ex9_1 : IO ()
