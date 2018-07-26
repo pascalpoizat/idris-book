@@ -6,3 +6,4 @@ exercices in "Type-Driven Development with Idris"
 - [x] chapter 4 (data types, dependent types, interactive programs, `Maybe`, `Either`, trees)
 - [x] chapter 5 (interactive programs extended, `IO`, `>>=` and `do`, files)
 - [x] chapter 6 (type-level functions)
+- [ ] chapter 7 (interfaces)
