@@ -51,7 +51,7 @@ data ThreeEq : a -> b -> c -> Type where
   Same3 : ThreeEq n n n
 
 -- for all three natural numbers,
--- if the three numlbers are equal then their three successors are equal
+-- if the three numbers are equal then their three successors are equal
 allSameS : (x, y, z : Nat) -> ThreeEq x y z -> ThreeEq (S x) (S y) (S z)
 allSameS z z z Same3 = Same3
 
