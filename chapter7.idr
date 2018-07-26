@@ -26,3 +26,51 @@ Ord Shape where
 
 testShapes : List Shape
 testShapes = [Circle 3, Triangle 3 9, Rectangle 2 6, Circle 4, Rectangle 2 7]
+
+--
+-- section 7.2
+--
+
+data Expr num = Val num
+              | Add (Expr num) (Expr num)
+              | Sub (Expr num) (Expr num)
+              | Mul (Expr num) (Expr num)
+              | Div (Expr num) (Expr num)
+              | Abs (Expr num)
+
+eval : (Neg num, Integral num, Abs num) => Expr num -> num
+eval (Val x) = x
+eval (Add x y) = eval x + eval y
+eval (Sub x y) = eval x - eval y
+eval (Mul x y) = eval x * eval y
+eval (Div x y) = eval x `div` eval y
+eval (Abs x) = abs (eval x)
+
+Num num => Num (Expr num) where
+  (+) = Add
+  (*) = Mul
+  fromInteger = Val . fromInteger
+
+Neg num => Neg (Expr num) where
+  negate x = 0 - x
+  (-) = Sub
+
+Abs num => Abs (Expr num) where
+  abs = Abs
+
+showHelper : Show a => String -> a -> a -> String
+showHelper op x y = "(" ++ show x ++ op ++ show y ++ ")"
+
+Show num => Show (Expr num) where
+  show (Val x) = show x
+  show (Add x y) = showHelper " + " x y
+  show (Sub x y) = showHelper " - " x y
+  show (Mul x y) = showHelper " * " x y
+  show (Div x y) = showHelper " `div`" x y
+  show (Abs x) = "(" ++ "abs " ++ show x ++ ")"
+
+(Neg num, Integral num, Abs num, Eq num) => Eq (Expr num) where
+  (==) x y = (eval x) == (eval y)
+
+(Neg num, Integral num, Abs num) => Cast (Expr num) num where
+  cast orig = eval orig
