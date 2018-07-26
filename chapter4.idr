@@ -208,7 +208,7 @@ sumEntries {n} pos xs ys = case integerToFin pos n of
                                 (Just x) => Just (index x xs + index x ys)
 
 --
--- section 4.3 (data store)
+-- section 4.3 (data store, see also the update of this example in chapter 6)
 --
 
 data DataStore : Type where
