@@ -122,3 +122,56 @@ myReverse'' xs = reverse' [] xs
     reverse' : Vect n a -> Vect m a -> Vect (n+m) a
     reverse' acc [] = reverseProof_nil acc
     reverse' acc (x :: xs) = reverseProof_xs (reverse' (x :: acc) xs)
+
+--
+-- section 8.3 (examples)
+--
+
+twoPlusTwoNotFive : 2 + 2 = 5 -> Void
+twoPlusTwoNotFive Refl impossible
+
+valueNotSucc : x = S x -> Void
+valueNotSucc Refl impossible
+
+zeroNotSucc : (0 = S k) -> Void
+zeroNotSucc Refl impossible
+
+succNotZero : (S k = 0) -> Void
+succNotZero Refl impossible
+
+noRec : (contra : (k = j) -> Void) -> (S k = S j) -> Void
+noRec contra Refl = contra Refl
+
+checkEqNat2 : (num1 : Nat) -> (num2 : Nat) -> Dec (num1 = num2)
+checkEqNat2 Z Z = Yes Refl
+checkEqNat2 Z (S k) = No zeroNotSucc
+checkEqNat2 (S k) Z = No succNotZero
+checkEqNat2 (S k) (S j) = case checkEqNat2 k j of
+                               (Yes prf) => Yes (cong prf)
+                               (No contra) => No (noRec contra)
+
+exactLength2 : (len : Nat) -> (input : Vect m a) -> Maybe (Vect len a)
+exactLength2 {m} len input = case decEq m len of
+                                  (Yes Refl) => Just input
+                                  (No contra) => Nothing
+
+--
+-- section 8.3 (exercices)
+--
+
+headUnequal : DecEq a => {xs : Vector n a} -> {ys : Vector n a} ->
+              (contra : (x = y) -> Void) -> ((x :: xs) = (y :: ys)) -> Void
+headUnequal contra Refl = contra Refl
+
+tailUnequal : DecEq a => {xs : Vector n a} -> {ys : Vector n a} ->
+              (contra : (xs = ys) -> Void) -> ((x :: xs) = (x :: ys)) -> Void
+tailUnequal contra Refl = contra Refl
+
+DecEq a => DecEq (Vector n a) where
+  decEq [] [] = Yes Refl
+  decEq (x :: xs) (y :: ys)
+    = case decEq x y of
+        Yes Refl => case decEq xs ys of
+                      Yes Refl => Yes Refl
+                      No contra2 => No (tailUnequal contra2)
+        No contra => No (headUnequal contra)
