@@ -2,6 +2,8 @@
 -- chapter 8
 -- note: some solutions may be using features not presented in chapters 1-8.
 
+import Data.Vect
+
 -- check that all functions are total
 %default total
 
@@ -9,9 +11,9 @@
 -- section 8.1 (examples)
 --
 
-data Vect : Nat -> Type -> Type where
-  Nil : Vect Z a
-  (::) : a -> Vect k a -> Vect (S k) a
+data Vector : Nat -> Type -> Type where
+  Nil : Vector Z a
+  (::) : a -> Vector k a -> Vector (S k) a
 
 -- exactLength : (len : Nat) -> (input : Vect m a) -> Maybe (Vect len a)
 -- exactLength {m} len input = case m == len of
@@ -30,7 +32,7 @@ checkEqNat Z (S k) = Nothing
 checkEqNat (S k) Z = Nothing
 checkEqNat (S k) (S j) = checkEqNat k j >>= Just . (sameS _ _)
 
-exactLength : (len : Nat) -> (input : Vect m a) -> Maybe (Vect len a)
+exactLength : (len : Nat) -> (input : Vector m a) -> Maybe (Vector len a)
 exactLength {m} len input = case checkEqNat m len of
                                  Nothing => Nothing
                                  (Just (Same len)) => Just input
@@ -69,3 +71,54 @@ allSameS z z z Same3 = Same3
 --                         1
 -- *chapter8> allSameS 2 2 2 Same3
 -- Same3 : ThreeEq 3 3 3
+
+--
+-- section 8.2 (examples)
+--
+
+myReverse : Vect n elem -> Vect n elem
+myReverse [] = []
+myReverse {n = S k} (x :: xs)
+  = let result = myReverse xs ++ [x] in
+        rewrite plusCommutative 1 k in result
+
+reverse_proof : (x : elem) -> (xs : Vect len elem) ->
+                Vect (len + 1) elem -> Vect (S len) elem
+reverse_proof {len} x xs result = rewrite plusCommutative 1 len in result
+
+myReverse' : Vect n elem -> Vect n elem
+myReverse' [] = []
+myReverse' (x :: xs) = reverse_proof x xs (myReverse' xs ++ [x])
+
+append_nil : (ys : Vect m elem) ->
+             Vect (plus m 0) elem
+append_nil {m} ys = rewrite plusZeroRightNeutral m in ys
+
+append_xs : Vect (S (m + len)) elem -> Vect (plus m (S len)) elem
+append_xs {m} {len} xs = rewrite sym (plusSuccRightSucc m len) in xs
+
+myAppend : Vect n elem -> Vect m elem -> Vect (m + n) elem
+myAppend [] ys = append_nil ys
+myAppend (x :: xs) ys = append_xs (x :: myAppend xs ys)
+
+--
+-- section 8.2 (exercices)
+--
+
+myPlusCommutes : (n : Nat) -> (m : Nat) -> n + m = m + n
+myPlusCommutes Z m = rewrite sym (plusZeroRightNeutral m) in Refl
+myPlusCommutes (S k) m = rewrite myPlusCommutes k m in
+                         rewrite plusSuccRightSucc m k in Refl
+
+reverseProof_nil : Vect n1 a -> Vect (plus n1 0) a
+reverseProof_nil {n1} xs = rewrite plusZeroRightNeutral n1 in xs
+
+reverseProof_xs : Vect (S (plus n1 len)) a -> Vect (plus n1 (S len)) a
+reverseProof_xs {n1} {len} xs = rewrite sym (plusSuccRightSucc n1 len) in xs
+
+myReverse'' : Vect n a -> Vect n a
+myReverse'' xs = reverse' [] xs
+  where
+    reverse' : Vect n a -> Vect m a -> Vect (n+m) a
+    reverse' acc [] = reverseProof_nil acc
+    reverse' acc (x :: xs) = reverseProof_xs (reverse' (x :: acc) xs)
