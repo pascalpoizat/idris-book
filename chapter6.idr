@@ -1,7 +1,7 @@
--- exercices in "Type-Driven Development with Idris" Edit
+-- exercises in "Type-Driven Development with Idris" Edit
 -- chapter 6
 -- note: some solutions may be using features not presented in chapters 1-6.
--- wrt the exercice on the use of 'do', we sometimes rather use:
+-- wrt the exercise on the use of 'do', we sometimes rather use:
 -- f x >>= Just . X
 -- instead of:
 -- do v <- f x
@@ -75,7 +75,7 @@ val2 = (adder 4 0) 1 2 3 4
 -- 10 : Int
 
 --
--- section 6.2 (exercices)
+-- section 6.2 (exercises)
 --
 
 Matrix : (rows : Nat) -> (cols : Nat) -> Type -> Type

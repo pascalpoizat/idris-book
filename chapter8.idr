@@ -1,4 +1,4 @@
--- exercices in "Type-Driven Development with Idris" Edit
+-- exercises in "Type-Driven Development with Idris" Edit
 -- chapter 8
 -- note: some solutions may be using features not presented in chapters 1-8.
 
@@ -38,7 +38,7 @@ exactLength {m} len input = case checkEqNat m len of
                                  (Just (Same len)) => Just input
 
 --
--- section 8.1 (exercices)
+-- section 8.1 (exercises)
 --
 
 same_cons : {xs : List a} -> {ys : List a} ->
@@ -102,7 +102,7 @@ myAppend [] ys = append_nil ys
 myAppend (x :: xs) ys = append_xs (x :: myAppend xs ys)
 
 --
--- section 8.2 (exercices)
+-- section 8.2 (exercises)
 --
 
 myPlusCommutes : (n : Nat) -> (m : Nat) -> n + m = m + n
@@ -156,7 +156,7 @@ exactLength2 {m} len input = case decEq m len of
                                   (No contra) => Nothing
 
 --
--- section 8.3 (exercices)
+-- section 8.3 (exercises)
 --
 
 headUnequal : DecEq a => {xs : Vector n a} -> {ys : Vector n a} ->

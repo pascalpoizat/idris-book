@@ -1,4 +1,4 @@
--- exercices in "Type-Driven Development with Idris" Edit
+-- exercises in "Type-Driven Development with Idris" Edit
 -- chapter 5
 -- note: some solutions may be using features not presented in chapters 1-5.
 

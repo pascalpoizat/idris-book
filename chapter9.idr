@@ -1,4 +1,4 @@
--- exercices in "Type-Driven Development with Idris" Edit
+-- exercises in "Type-Driven Development with Idris" Edit
 -- chapter 9
 -- note: some solutions may be using features not presented in chapters 1-9.
 
@@ -37,7 +37,7 @@ removeElem {n = (S k)} value (y :: ys) {prf = There later}
   = y :: removeElem value ys
 
 --
--- section 9.1 (exercices)
+-- section 9.1 (exercises)
 --
 
 data Elem' : a -> List a -> Type where
