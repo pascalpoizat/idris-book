@@ -7,3 +7,4 @@ exercices in "Type-Driven Development with Idris"
 - [x] chapter 5 (interactive programs extended, `IO`, `>>=` and `do`, files)
 - [x] chapter 6 (type-level functions)
 - [x] chapter 7 (interfaces, `Eq`, `Ord`, `Show`, `Num`, `Neg`, `Integral`, `Fractional`, `Abs`, `Cast`, `Functor`, `Monad`)
+- [x] chapter 8 (equality, proofs, rewrite rules)
