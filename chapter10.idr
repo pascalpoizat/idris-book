@@ -3,6 +3,7 @@
 -- note: some solutions may be using features not presented in chapters 1-10.
 
 import Data.Vect
+import Data.List.Views
 
 -- check that all functions are total
 %default total
@@ -151,3 +152,52 @@ halves : List a -> (List a, List a)
 halves xs with (takeN (length xs `div` 2) xs)
   halves xs | Fewer = (xs, [])
   halves (n_xs ++ ys) | (Exact n_xs) = (n_xs, ys)
+
+--
+-- section 10.2 (examples)
+--
+
+data SnocList0 ty = SnocEmpty0 | Snoc0 (SnocList0 ty) ty
+
+reverseSnoc0 : SnocList0 ty -> List ty
+reverseSnoc0 SnocEmpty0 = []
+reverseSnoc0 (Snoc0 xs x) = x :: reverseSnoc0 xs
+
+data MySnocList : List a -> Type where
+  MySnocEmpty : MySnocList []
+  MySnoc : (rec : MySnocList xs) -> MySnocList (xs ++ [x])
+
+snocListHelp : (snoc : MySnocList input) -> (rest : List a) ->
+               MySnocList (input ++ rest)
+snocListHelp {input} snoc [] = rewrite appendNilRightNeutral input in snoc
+snocListHelp {input} snoc (x :: xs) = rewrite appendAssociative input [x] xs in
+                                        (snocListHelp (MySnoc snoc {x}) xs)
+
+mySnocList : (xs : List a) -> MySnocList xs
+mySnocList xs = snocListHelp MySnocEmpty xs
+
+myReverseHelper : (input : List a) -> MySnocList input -> List a
+myReverseHelper [] MySnocEmpty = []
+myReverseHelper (xs ++ [x]) (MySnoc rec) = myReverseHelper xs rec
+
+myReverse : List a -> List a
+myReverse input with (mySnocList input)
+  myReverse [] | MySnocEmpty = []
+  myReverse (xs ++ [x]) | (MySnoc rec) = x :: myReverse xs | rec
+
+isSuffix : Eq a => List a -> List a -> Bool
+isSuffix input1 input2 with (mySnocList input1)
+  isSuffix [] input2 | MySnocEmpty = True
+  isSuffix (xs ++ [x]) input2 | (MySnoc xsrec) with (mySnocList input2)
+    isSuffix (xs ++ [x]) [] | (MySnoc xsrec) | MySnocEmpty = False
+    isSuffix (xs ++ [x]) (ys ++ [y]) | (MySnoc xsrec) | (MySnoc ysrec)
+      = if x == y then isSuffix xs ys | xsrec | ysrec
+                  else False
+
+mergeSort2 : Ord a => List a -> List a
+mergeSort2 input with (splitRec input)
+  mergeSort2 [] | SplitRecNil = []
+  mergeSort2 [x] | SplitRecOne = [x]
+  mergeSort2 (lefts ++ rights) | (SplitRecPair lrec rrec)
+    = merge (mergeSort lefts | lrec)
+            (mergeSort rights | rrec)
