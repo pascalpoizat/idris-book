@@ -4,6 +4,8 @@
 
 import Data.Vect
 import Data.List.Views
+import Data.Vect.Views
+import Data.Nat.Views
 
 -- check that all functions are total
 %default total
@@ -201,3 +203,42 @@ mergeSort2 input with (splitRec input)
   mergeSort2 (lefts ++ rights) | (SplitRecPair lrec rrec)
     = merge (mergeSort lefts | lrec)
             (mergeSort rights | rrec)
+
+--
+-- section 10.2 (exercises)
+--
+
+equalSuffix : Eq a => List a -> List a -> List a
+equalSuffix input1 input2 with (snocList input1)
+  equalSuffix [] input2 | Empty = []
+  equalSuffix (xs ++ [x]) input2 | (Snoc xsrec) with (snocList input2)
+    equalSuffix (xs ++ [x]) [] | (Snoc xsrec) | Empty = []
+    equalSuffix (xs ++ [x]) (ys ++ [y]) | (Snoc xsrec) | (Snoc ysrec)
+      = if x == y then (equalSuffix xs ys | xsrec | ysrec) ++ [x]
+                  else []
+
+mergeSortVect : Ord a => Vect n a -> Vect n a
+mergeSortVect xs with (splitRec xs)
+  mergeSortVect [] | SplitRecNil = []
+  mergeSortVect [x] | SplitRecOne = [x]
+  mergeSortVect (lefts ++ rights) | (SplitRecPair lrec rrec)
+    = merge (mergeSortVect lefts | lrec)
+            (mergeSortVect rights | rrec)
+
+toBinary : Nat -> String
+toBinary k with (halfRec k)
+  toBinary Z | HalfRecZ = ""
+  toBinary (n + n) | (HalfRecEven rec) = (toBinary n | rec) ++ "0"
+  toBinary (S (n + n)) | (HalfRecOdd rec) = (toBinary n | rec) ++ "1"
+
+-- needed due to lazy argument of HalfRec
+-- use :exec toBinaryMain $ toBinary 42
+toBinaryMain : Nat -> IO ()
+toBinaryMain k = do putStrLn $ toBinary k
+
+palindrome : Eq a => List a -> Bool
+palindrome xs with (vList xs)
+  palindrome [] | VNil = True
+  palindrome [x] | VOne = True
+  palindrome (x :: (ys ++ [y])) | (VCons rec)
+    = (x == y) && palindrome ys | rec
