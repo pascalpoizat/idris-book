@@ -4,6 +4,9 @@
 
 module Shapes10
 
+-- check that all functions are total
+%default total
+
 export data Shape = Triangle Double Double
                   | Rectangle Double Double
                   | Circle Double

@@ -4,6 +4,9 @@
 
 import DataStore10
 
+-- check that all functions are total
+%default total
+
 testStore : DataStore (SString .+. SString .+. SInt)
 testStore = addToStore ("Mercury", "Mariner 10", 1974) $
             addToStore ("Venus", "Venera", 1961) $

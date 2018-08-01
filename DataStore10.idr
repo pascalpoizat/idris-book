@@ -6,6 +6,9 @@ module DataStore10
 
 import Data.Vect
 
+-- check that all functions are total
+%default total
+
 infixr 5 .+.
 
 public export
