@@ -9,3 +9,4 @@ exercices in "Type-Driven Development with Idris"
 - [x] chapter 7 (interfaces, `Eq`, `Ord`, `Show`, `Num`, `Neg`, `Integral`, `Fractional`, `Abs`, `Cast`, `Functor`, `Monad`)
 - [x] chapter 8 (equality, proofs, `=`, `Refl`, `cong`, rewrite rules, `Void`, `void`, `Dec`, `DecEq`)
 - [x] chapter 9 (predicates, `Elem`, `Uninhabited`, `absurd`, `auto`, program states)
+- [x] chapter 10 (views, covering functions, `with`, modules, `private`, `export`, `public export`)
