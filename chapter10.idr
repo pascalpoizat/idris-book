@@ -242,3 +242,9 @@ palindrome xs with (vList xs)
   palindrome [x] | VOne = True
   palindrome (x :: (ys ++ [y])) | (VCons rec)
     = (x == y) && palindrome ys | rec
+
+--
+-- section 10.3 (exercises)
+-- for exercises relative to the DataStore, see DataStore10.idr and TestStore10.idr
+-- for exercises relative to Shapes, see Shapes10.idr and TestShapes10.idr
+--
