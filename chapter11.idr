@@ -2,6 +2,7 @@
 -- chapter 11
 
 import Data.Primitives.Views
+import System
 
 -- check that all functions are total
 %default total
@@ -90,3 +91,81 @@ square_root_bound (S k) n bound (val :: xs)
 
 square_root : (number : Double) -> Double
 square_root n = square_root_bound 100 n 0.00000000001 (square_root_approx n n)
+
+--
+-- section 11.2 (examples)
+--
+
+data InfIO : Type where
+  Do : IO a
+       -> (a -> Inf InfIO)
+       -> InfIO
+
+loopPrint : String -> InfIO
+loopPrint msg = Do (putStrLn msg)
+                   (\_ => loopPrint msg)
+
+partial
+run : InfIO -> IO ()
+run (Do action cont) = do res <- action
+                          run (cont res)
+
+data Fuel = Dry | More Fuel
+
+tank : Nat -> Fuel
+tank Z = Dry
+tank (S k) = More (tank k)
+
+runOnFuel : Fuel -> InfIO -> IO ()
+runOnFuel (More fuel) (Do act gen) = do res <- act
+                                        runOnFuel fuel (gen res)
+runOnFuel Dry ios = putStrLn "Out of fuel"
+
+data LazyFuel = LDry | LMore (Lazy LazyFuel)
+
+partial
+forever : LazyFuel
+forever = LMore forever
+
+runOnLazyFuel : LazyFuel -> InfIO -> IO ()
+runOnLazyFuel (LMore fuel) (Do act gen) = do res <- act
+                                             runOnLazyFuel fuel (gen res)
+runOnLazyFuel LDry ios = putStrLn "Out of fuel"
+
+(>>=) : IO a -> (a -> Inf InfIO)  -> InfIO
+(>>=) = Do
+
+loopPrint' : String -> InfIO
+loopPrint' msg = do putStrLn msg
+                    loopPrint' msg
+
+quiz' : Stream Int -> (score : Nat) -> InfIO
+quiz'  (num1 :: num2 :: nums) score
+  = do putStrLn ("Score so far:" ++ show score)
+       putStr (show num1 ++ " * " ++ show num2 ++ "? ")
+       answer <- getLine
+       if cast answer == num1 * num2
+         then do putStrLn "Correct!"
+                 quiz' nums (score + 1)
+         else do putStrLn ("Wrong, the answer is " ++ show (num1 * num2))
+                 quiz' nums score
+
+partial
+main : IO ()
+main = do seed <- time
+          runOnLazyFuel forever (quiz' (arithInputs (fromInteger seed)) 0)
+
+--
+-- section 11.2 (exercises)
+--
+
+totalREPL : String -> (String -> String) -> InfIO
+totalREPL prompt action =
+  do putStr prompt
+     input <- getLine
+     putStr $ action input
+     totalREPL prompt action
+
+partial
+mainREPL : IO ()
+mainREPL = runOnLazyFuel forever (totalREPL "\n: " toUpper)
