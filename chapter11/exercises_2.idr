@@ -1,8 +1,6 @@
 -- exercises in "Type-Driven Development with Idris" Edit
 -- chapter 11, section 2
 
-import Data.Primitives.Views
-
 -- check that all functions are total
 %default total
 
