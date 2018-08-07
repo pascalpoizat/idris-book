@@ -11,3 +11,4 @@ exercices in "Type-Driven Development with Idris"
 - [x] chapter 9 (predicates, contracts, program states, `Elem`, `Uninhabited`, `absurd`, `auto`)
 - [x] chapter 10 (views, covering functions, data structure traversals, recursive views and termination, modules, data representation hiding, `SnocList`, `SplitRec`, `VList`, `Lazy`, `Delay`, `Force`, `$`, `with`)
 - [x] chapter 11 (streams and infinite data, recursion/corecursion, data/codata, terminating/productive functions, namespaces, `Inf`, `Lazy`, `Delay`, `Force`, `Delayed`, `Divides`, `mutual`)
+- [x] chapter 12 (mutable state, state management, record update syntax)
