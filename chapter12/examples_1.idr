@@ -1,15 +1,11 @@
 -- exercises in "Type-Driven Development with Idris" Edit
--- chapter 12
+-- chapter 12, section 1
 
 import Control.Monad.State
 import Tree
 
 -- check that all functions are total
 %default total
-
---
--- section 12.1
---
 
 testTree : Tree String
 testTree = Node (Node (Node Empty "Jim" Empty) "Fred"
@@ -44,7 +40,7 @@ namespace WithState
   treeLabel : Tree a -> Tree (Integer, a)
   treeLabel t = evalState (treeLabelWith t) [1..]
 
--- > :exec putStr $ show $ WithoutState.treeLabel testTree
+-- > :exec printLn $ WithoutState.treeLabel testTree
 -- (4, "Alice")
 -- |
 -- +- (2, "Fred")
