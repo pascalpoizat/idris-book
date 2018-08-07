@@ -43,3 +43,9 @@ testTree : Tree String
 testTree = Node (Node (Node Empty "Jim" Empty) "Fred"
                       (Node Empty "Sheila" Empty)) "Alice"
                 (Node Empty "Bob" (Node Empty "Eve" Empty))
+
+--
+-- section 12.3
+-- see Quiz.idr (with added things to update difficulty)
+-- see SocialNews.idr
+--
