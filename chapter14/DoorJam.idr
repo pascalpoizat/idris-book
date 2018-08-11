@@ -1,4 +1,4 @@
--- exercises in "Type-Driven Development with Idris" Edit
+-- examples in "Type-Driven Development with Idris"
 -- chapter 14, section 1, Door part
 
 -- check that all functions are total

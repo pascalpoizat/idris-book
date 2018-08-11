@@ -1,4 +1,4 @@
--- exercises in "Type-Driven Development with Idris" Edit
+-- exercises in "Type-Driven Development with Idris"
 -- chapter 2
 
 -- exercise 1

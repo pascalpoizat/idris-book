@@ -1,4 +1,4 @@
--- exercises in "Type-Driven Development with Idris" Edit
+-- examples in "Type-Driven Development with Idris"
 -- chapter 14, section 2, ATM part
 -- some variations wrt the book (since it has been done from scratch partly as an exercise)
 

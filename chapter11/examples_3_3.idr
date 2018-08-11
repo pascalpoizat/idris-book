@@ -1,4 +1,4 @@
--- exercises in "Type-Driven Development with Idris" Edit
+-- examples in "Type-Driven Development with Idris"
 -- chapter 11, section 3, part 2
 
 import Data.Primitives.Views

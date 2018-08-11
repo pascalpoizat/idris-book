@@ -1,4 +1,4 @@
--- exercises in "Type-Driven Development with Idris" Edit
+-- exercises in "Type-Driven Development with Idris"
 -- chapter 9
 
 -- check that all functions are total

@@ -1,4 +1,4 @@
--- exercises in "Type-Driven Development with Idris" Edit
+-- examples in "Type-Driven Development with Idris"
 -- chapter 13, section 2, Stack part
 
 import Data.Vect
