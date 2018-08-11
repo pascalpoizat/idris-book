@@ -54,9 +54,17 @@ namespace MachineDo
           ((res : a) -> Inf (MachineIO (s2 res))) -> MachineIO s1
   (>>=) = Do
 
+getRandom : Int -> Int -> Int
+getRandom val max with (divides val max)
+  getRandom val 0 | DivByZero = 0
+  getRandom ((max * div) + rem) max | (DivBy prf) = abs rem
+
 ||| "randomly generates" a valid or invalid coin
 randomCoin : IO CoinResult
-randomCoin = pure Inserted
+randomCoin = do seed <- time
+                case (getRandom (fromInteger seed) 4) of
+                  0 => pure Rejected
+                  _ => pure Inserted
 
 runMachine : MachineCmd ty inState outState -> IO ty
 runMachine InsertCoin = do Inserted <- randomCoin
