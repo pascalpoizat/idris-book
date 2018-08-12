@@ -128,7 +128,6 @@ ok : (res : ty) -> Game (outstate res) -> IO (GameResult ty outstate)
 ok res st = pure (OK res st)
 
 ||| Running a game command over fuel
-partial
 runCmd : Fuel ->
          Game instate ->
          GameCmd ty instate outstate ->
@@ -145,7 +144,7 @@ runCmd fuel state ShowState = do printLn state
                                  ok () state
 runCmd fuel state (Message x) = do putStrLn x
                                    ok () state
-runCmd fuel state ReadGuess
+runCmd (More fuel) state ReadGuess
   = do putStr "Guess: "
        input <- getLine
        case unpack input of
@@ -163,7 +162,6 @@ runCmd fuel st (cmd >>= next)
        runCmd fuel newSt (next cmdRes)
 
 ||| Running a game loop over fuel
-partial
 run : Fuel ->
       Game instate ->
       GameLoop ty instate outstate ->
