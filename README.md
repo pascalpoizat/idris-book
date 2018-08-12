@@ -14,5 +14,3 @@ examples (some) and solutions to the exercices in "Type-Driven Development with 
 - [x] chapter 12 (mutable state, state management, record update syntax)
 - [x] chapter 13 (state machines, protocols in types, preconditions/postconditions, dependent types in states)
 - [x] chapter 14 (handling errors in state transitions, security properties in types, abstract vs concrete state)
-
-*note:* some functions are partial in examples or exercises while they seem to be total in the book.
