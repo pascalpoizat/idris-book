@@ -1,5 +1,5 @@
 # idris-book
-exercices in "Type-Driven Development with Idris"
+examples (some) and solutions to the exercices in "Type-Driven Development with Idris"
 
 - [x] chapter 2 (basics, lists)
 - [x] chapter 3 (pattern matching, type-driven interactive development, implicit arguments, vectors)
@@ -13,3 +13,6 @@ exercices in "Type-Driven Development with Idris"
 - [x] chapter 11 (streams and infinite data, recursion/corecursion, data/codata, terminating/productive functions, namespaces, `Inf`, `Lazy`, `Delay`, `Force`, `Delayed`, `Divides`, `mutual`)
 - [x] chapter 12 (mutable state, state management, record update syntax)
 - [x] chapter 13 (state machines, protocols in types, preconditions/postconditions, dependent types in states)
+- [x] chapter 14 (handling errors in state transitions, security properties in types, abstract vs concrete state)
+
+*note:* some functions are partial in examples or exercises while they seem to be total in the book.
