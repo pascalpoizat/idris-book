@@ -13,3 +13,7 @@
 -- section 14.2
 -- see ATM.idr
 --
+
+-- section 14.3
+-- see Hangman.idr
+--
