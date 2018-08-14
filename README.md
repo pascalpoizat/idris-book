@@ -14,3 +14,4 @@ examples (some) and solutions to the exercices in "Type-Driven Development with 
 - [x] chapter 12 (mutable state, state management, record update syntax)
 - [x] chapter 13 (state machines, protocols in types, preconditions/postconditions, dependent types in states)
 - [x] chapter 14 (handling errors in state transitions, security properties in types, abstract vs concrete state)
+- [x] chapter 15 (concurrency, message-passing communication, behavioral types)
